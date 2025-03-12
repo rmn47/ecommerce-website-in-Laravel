@@ -62,10 +62,10 @@
                 <p><strong>Total Amount:</strong> ₹258.58</p>
             </div>
 
-            <p>If you have any questions or need further assistance, please don’t hesitate to contact us at <a href="mailto:info@gitysoft.com">info@gitysoft.com</a>.</p>
+            <p>If you have any questions or need further assistance, please don’t hesitate to contact us at <a href="mailto:yourmail@email.com">yourmail@email.com</a>.</p>
         </div>
         <div class="footer">
-            <p>Best regards,<br>The Online Pharmacy India | Buy Medicines from India's Trusted Medicine Store: Team</p>
+            <p>Best regards,<br>Team</p>
         </div>
     </div>
 </body>

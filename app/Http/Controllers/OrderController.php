@@ -690,8 +690,8 @@ class OrderController extends Controller
         // }
     
         // Email settings
-        $fromAddress = env('MAIL_FROM_ADDRESS', 'info@gitysoft.com');
-        $fromName = env('MAIL_FROM_NAME', 'no-reply');
+        $fromAddress = env('MAIL_FROM_ADDRESS');
+        $fromName = env('MAIL_FROM_NAME');
         $subject = "Your App - Payment Status Update: {$status}";
         $data = [
             'order' => $order,
@@ -901,8 +901,8 @@ class OrderController extends Controller
             'status' => $status,
         ];
         
-        $fromAddress = env('MAIL_FROM_ADDRESS', 'info@gitysoft.com');
-        $fromName = env('MAIL_FROM_NAME', 'no-reply');
+        $fromAddress = env('MAIL_FROM_ADDRESS');
+        $fromName = env('MAIL_FROM_NAME');
     
         // Send Email
         try {

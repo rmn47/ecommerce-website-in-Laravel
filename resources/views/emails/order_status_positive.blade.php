@@ -52,7 +52,7 @@
             <p>Dear {{ $customer_name ?? 'Customer' }},</p>
             
             @if(in_array($status, ['delivered', 'on_the_way', 'paid', 'unpaid', 'ready_for_pickup', 'confirmed']))
-                <p>Thank you for choosing Online Pharmacy India! We’re pleased to update you on your order status.</p>
+                <p>Thank you for choosing Online eccomerce We’re pleased to update you on your order status.</p>
             @endif
 
             <div class="order-details">
@@ -62,10 +62,10 @@
                 <p><strong>Total Amount:</strong> ₹258.58</p>
             </div>
 
-            <p>If you have any questions or need further assistance, please don’t hesitate to contact us at <a href="mailto:info@gitysoft.com">info@gitysoft.com</a>.</p>
+            <p>If you have any questions or need further assistance, please don’t hesitate to contact us at <a href="mailto:yourmail@email.com">yourmail@email.com</a>.</p>
         </div>
         <div class="footer">
-            <p>Best regards,<br>The Online Pharmacy India | Buy Medicines from India's Trusted Medicine Store: Team</p>
+            <p>Best regards,<br>Team</p>
         </div>
     </div>
 </body>
