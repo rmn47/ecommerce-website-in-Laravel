@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP & Registration Portal</title>
+  <style>
+    /* Global & Body Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body.pp-body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f4f4f4, #e9ecef);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-size: 16px;
+      color: #333;
+    }
+
+    /* Popup Container Styles */
+    .pp-popup {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      margin: 10px;
+    }
+    .pp-popup h2 {
+      color: #2D2B5C;
+      margin-bottom: 15px;
+      font-size: 1.6rem;
+    }
+    .pp-popup p {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .pp-popup input {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .pp-popup input:focus {
+      outline: none;
+      border-color: #00A0E2;
+    }
+    .pp-popup button {
+      width: 100%;
+      padding: 12px;
+      background-color: #00A0E2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    .pp-popup button:hover {
+      background-color: #2D2B5C;
+    }
+    .pp-popup a {
+      color: #00A0E2;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .pp-popup a:hover {
+      text-decoration: underline;
+    }
+
+    /* Radio Options Styling */
+    .pp-radio-options {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+    .pp-radio-options label {
+      font-size: 1rem;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .pp-radio-options input {
+      margin-right: 8px;
+      transform: scale(1.2);
+    }
+
+    /* Sub Popup (Form) Styles */
+    .pp-sub-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+    .pp-sub-popup-content {
+      background: #fff;
+      padding: 20px 15px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 350px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .pp-sub-popup-content h3 {
+      margin-bottom: 20px;
+      color: #2D2B5C;
+      font-size: 1.5rem;
+    }
+    .pp-sub-popup-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+    .pp-sub-popup-content input:focus {
+      outline: none;
+      border-color: #00A0E2;
+    }
+    .pp-sub-popup-content button {
+      width: 100%;
+      padding: 10px;
+      background-color: #00A0E2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    .pp-sub-popup-content button:hover {
+      background-color: #2D2B5C;
+    }
+    .pp-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .pp-close-btn:hover {
+      color: #333;
+    }
+
+    /* Location Icon Inside Input Field */
+    .location-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #00A0E2;
+      font-size: 18px;
+    }
+    .input-wrapper {
+      position: relative;
+    }
+
+    /* Edit Mobile Number Link */
+    .edit-mobile {
+      color: #00A0E2;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 5px;
+    }
+    .edit-mobile:hover {
+      text-decoration: underline;
+    }
+
+    /* Resend OTP Timer */
+    .resend-timer {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+    .resend-timer span {
+      color: #00A0E2;
+      font-weight: bold;
+    }
+
+    /* Responsive Adjustments for Mobile */
+    @media (max-width: 480px) {
+      body.pp-body {
+        font-size: 14px;
+      }
+      .pp-popup, .pp-sub-popup-content {
+        padding: 15px 10px;
+      }
+      .pp-popup h2, .pp-sub-popup-content h3 {
+        font-size: 1.3rem;
+      }
+      .pp-popup input, .pp-sub-popup-content input {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      .pp-popup button, .pp-sub-popup-content button {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body class="pp-body">
+  <!-- 1. Mobile Number Entry Popup -->
+  <div class="pp-popup" id="mobilePopup">
+    <h2>Enter Mobile Number</h2>
+    <p>Get access to your orders, lab tests & doctor consultations</p>
+    <input type="text" id="mobileInput" placeholder="Enter Mobile Number" maxlength="10" oninput="validateMobile(this)" />
+    <button onclick="submitMobile()">Login</button>
+    <p style="margin-top:20px; font-size:0.9rem;">
+      New on Our Portal? <a href="#">Sign Up</a>
+    </p>
+    <p style="font-size:0.8rem;">
+      By logging in, you agree to our <a href="#">Terms & Conditions</a> & <a href="#">Privacy Policy</a>
+    </p>
+    <p style="font-size:0.8rem;">
+      Need Help? <a href="#">Get In Touch</a>
+    </p>
+  </div>
+
+  <!-- 2. OTP Verification Popup -->
+  <div class="pp-popup" id="otpPopup" style="display: none;">
+    <h2>OTP Verification</h2>
+    <p>OTP has been sent to <span id="mobileNumberDisplay"></span> <span class="edit-mobile" onclick="editMobile()">Edit</span></p>
+    <input type="text" id="otpInput" placeholder="Enter OTP" maxlength="6" oninput="validateOTP(this)" />
+    <button onclick="verifyOTP()">Done</button>
+    <p class="resend-timer">Resend in <span id="timer">0:30</span></p>
+  </div>
+
+  <!-- 3. Role Selection Popup -->
+  <div class="pp-popup" id="rolePopup" style="display: none;">
+    <h2>Select Your Role</h2>
+    <p>Kindly Choose Your Relevant Area</p>
+    <div class="pp-radio-options">
+      <label>
+        <input type="radio" name="role" value="organization" onchange="openRelevantPopup()" /> Organization
+      </label>
+      <label>
+        <input type="radio" name="role" value="seller" onchange="openRelevantPopup()" /> Seller
+      </label>
+      <label>
+        <input type="radio" name="role" value="otherBuyer" onchange="openRelevantPopup()" /> Customer
+      </label>
+    </div>
+  </div>
+
+  <!-- 4. Organization Registration Form Popup -->
+  <div class="pp-sub-popup" id="organizationPopup">
+    <div class="pp-sub-popup-content">
+      <span class="pp-close-btn" onclick="closePopup('organizationPopup')">&times;</span>
+      <h3>Organization Registration</h3>
+      <input type="text" placeholder="Full Name" required />
+      <input type="text" placeholder="Mobile" maxlength="10" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required />
+      <input type="email" placeholder="Email ID" required />
+      <div class="input-wrapper">
+        <span class="location-icon" onclick="autoDetectLocation('billingAddressOrg')">📍</span>
+        <input type="text" id="billingAddressOrg" placeholder="Detect Billing Address" />
+      </div>
+      <input type="text" placeholder="GST Number / Registration Number" maxlength="15" pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}Z[0-9A-Z]{1}" title="Format: 27BFRFS6103Q1Z6 (15 characters, uppercase)" />
+      <input type="text" placeholder="Drug License Number" />
+      <input type="file" accept=".pdf,.jpeg,.png,.webp,.doc,.docx" multiple />
+      <button onclick="submitRegistration()">Done</button>
+    </div>
+  </div>
+
+  <!-- 5. Seller Registration Form Popup -->
+  <div class="pp-sub-popup" id="sellerPopup">
+    <div class="pp-sub-popup-content">
+      <span class="pp-close-btn" onclick="closePopup('sellerPopup')">&times;</span>
+      <h3>Seller Registration</h3>
+      <input type="text" placeholder="Full Name" required />
+      <input type="text" placeholder="Mobile" maxlength="10" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required />
+      <input type="email" placeholder="Email ID" required />
+      <div class="input-wrapper">
+        <span class="location-icon" onclick="autoDetectLocation('billingAddressSeller')">📍</span>
+        <input type="text" id="billingAddressSeller" placeholder="Detect Billing Address" />
+      </div>
+      <input type="text" placeholder="GST Number / Registration Number" maxlength="15" pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}Z[0-9A-Z]{1}" title="Format: 27ADVFS6103Q1Z6 (15 characters, uppercase)" />
+      <input type="text" placeholder="Drug License Number" />
+      <input type="file" accept=".pdf,.jpeg,.png,.webp,.doc,.docx" multiple />
+      <button onclick="submitRegistration()">Done</button>
+    </div>
+  </div>
+
+  <!-- 6. Customer Registration Form Popup -->
+  <div class="pp-sub-popup" id="otherBuyerPopup">
+    <div class="pp-sub-popup-content">
+      <span class="pp-close-btn" onclick="closePopup('otherBuyerPopup')">&times;</span>
+      <h3>Customer Registration</h3>
+      <input type="text" placeholder="Full Name" required />
+      <input type="text" placeholder="Mobile" maxlength="10" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number" required />
+      <input type="email" placeholder="Email ID" required />
+      <div class="input-wrapper">
+        <span class="location-icon" onclick="autoDetectLocation('billingAddressCustomer')">📍</span>
+        <input type="text" id="billingAddressCustomer" placeholder="Detect Billing Address" />
+      </div>
+      <input type="file" accept=".pdf,.jpeg,.png,.webp,.doc,.docx" multiple />
+      <button onclick="submitRegistration()">Done</button>
+    </div>
+  </div>
+
+  <script>
+    let mobileNumber = '';
+    let timerInterval;
+
+    // Step 1: Validate Mobile Number Input (10 digits only)
+    function validateMobile(input) {
+      input.value = input.value.replace(/\D/g, '').substring(0, 10);
+    }
+
+    // Step 2: Validate OTP Input (6 digits only)
+    function validateOTP(input) {
+      input.value = input.value.replace(/\D/g, '').substring(0, 6);
+    }
+
+    // Step 3: Process Mobile Number Submission
+    function submitMobile() {
+      const mobile = document.getElementById('mobileInput').value.trim();
+      const mobilePattern = /^[0-9]{10}$/;
+      if (mobilePattern.test(mobile)) {
+        mobileNumber = mobile;
+        document.getElementById('mobilePopup').style.display = 'none';
+        document.getElementById('otpPopup').style.display = 'block';
+        document.getElementById('mobileNumberDisplay').textContent = mobile;
+        startTimer();
+      } else {
+        alert("Please Enter 10 Digit Valid Mobile Number");
+      }
+    }
+
+    // Step 4: OTP Verification (6 digits only)
+    function verifyOTP() {
+      const otp = document.getElementById('otpInput').value.trim();
+      if (otp && otp.length === 6) {
+        document.getElementById('otpPopup').style.display = 'none';
+        document.getElementById('rolePopup').style.display = 'block';
+        clearInterval(timerInterval);
+      } else {
+        alert('Please enter a valid 6-digit OTP.');
+      }
+    }
+
+    // Step 5: Open the relevant form popup based on the selected role
+    function openRelevantPopup() {
+      const selectedRoleElem = document.querySelector('input[name="role"]:checked');
+      if (selectedRoleElem) {
+        const selectedRole = selectedRoleElem.value;
+        document.getElementById('rolePopup').style.display = 'none';
+        if (selectedRole === 'organization') {
+          document.getElementById('organizationPopup').style.display = 'flex';
+        } else if (selectedRole === 'seller') {
+          document.getElementById('sellerPopup').style.display = 'flex';
+        } else if (selectedRole === 'otherBuyer') {
+          document.getElementById('otherBuyerPopup').style.display = 'flex';
+        }
+      }
+    }
+
+    // Step 6: Close the respective sub-popup form and return to Role Selection
+    function closePopup(popupId) {
+      document.getElementById(popupId).style.display = 'none';
+      document.getElementById('rolePopup').style.display = 'block';
+    }
+
+    // Step 7: Submit Registration and redirect
+    function submitRegistration() {
+      alert('Your registration has been submitted!');
+      window.location.href = "https://drinfrarealtors.one/";
+    }
+
+    // Step 8: Auto-Detect Location using HTML5 Geolocation and Reverse Geocoding via Nominatim
+    function autoDetectLocation(fieldId) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude.toFixed(4);
+          const lon = position.coords.longitude.toFixed(4);
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => {
+              const address = data.display_name || "Unknown Address";
+              document.getElementById(fieldId).value = address;
+            })
+            .catch(err => {
+              alert("Error retrieving address: " + err.message);
+            });
+        }, function(error) {
+          alert("Error retrieving location: " + error.message);
+        });
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    }
+
+    // Step 9: Edit Mobile Number
+    function editMobile() {
+      document.getElementById('otpPopup').style.display = 'none';
+      document.getElementById('mobilePopup').style.display = 'block';
+      clearInterval(timerInterval);
+    }
+
+// Step 10: Start Resend OTP Timer
+    function startTimer() {
+      let timeLeft = 30;
+      const timerElement = document.getElementById('timer');
+
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+          clearInterval(timerInterval);
+          timerElement.innerHTML = '<a href="#" onclick="resendOTP()">Resend OTP</a>';
+        }
+      }, 1000);
+    }
+
+    // Step 11: Resend OTP Functionality
+    function resendOTP() {
+      alert("A new OTP has been sent to your mobile number.");
+      startTimer();
+    }
+  </script>

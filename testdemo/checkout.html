@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Page</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Left Section - Checkout Form */
+    .checkout-form {
+      flex: 1 1 60%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkout-form h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .payment-options {
+      margin-top: 20px;
+    }
+
+    .payment-options label {
+      margin-right: 15px;
+    }
+
+    .terms {
+      margin-top: 20px;
+    }
+
+    .terms label {
+      margin-left: 10px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .checkout-btn:hover {
+      background-color: #218838;
+    }
+
+    /* Right Section - Sidebar Cart */
+    .sidebar-cart {
+      flex: 1 1 35%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-cart h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .cart-items {
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+    }
+
+    .cart-item-details {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    .cart-item-details h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .cart-item-details p {
+      margin: 5px 0;
+      color: #777;
+    }
+
+    .addon-products {
+      margin-top: 20px;
+    }
+
+    .addon-product {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .addon-product label {
+      margin-left: 10px;
+    }
+
+    .discount {
+      margin-top: 20px;
+    }
+
+    .discount input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .checkout-form,
+      .sidebar-cart {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Checkout Form -->
+    <div class="checkout-form">
+      <h2>Checkout</h2>
+      <form>
+        <!-- Billing Address -->
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="johndoe@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Billing Address</label>
+          <textarea id="address" placeholder="123 Main St, City, Country" required></textarea>
+        </div>
+
+        <!-- Payment Options -->
+        <div class="payment-options">
+          <label><input type="radio" name="payment" value="credit-card" checked> Credit Card</label>
+          <label><input type="radio" name="payment" value="paypal"> PayPal</label>
+          <label><input type="radio" name="payment" value="cod"> Cash on Delivery</label>
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="terms">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">I agree to the terms and conditions</label>
+        </div>
+
+        <!-- Checkout Button -->
+        <button type="submit" class="checkout-btn">Place Order</button>
+      </form>
+    </div>
+
+    <!-- Sidebar Cart -->
+    <div class="sidebar-cart">
+      <h2>Your Cart</h2>
+      <div class="cart-items">
+        <!-- Product 1 -->
+        <div class="cart-item">
+          <img src="https://via.placeholder.com/50" alt="Product 1">
+          <div class="cart-item-details">
+            <h3>Product 1</h3>
+            <p>₹500 x 1</p>
+          </div>
+          <p>₹500</p>
+        </div>
+        <!-- Product 2 -->
+        <div class="cart-item">
+          <img src="https://via.placeholder.com/50" alt="Product 2">
+          <div class="cart-item-details">
+            <h3>Product 2</h3>
+            <p>₹300 x 2</p>
+          </div>
+          <p>₹600</p>
+        </div>
+      </div>
+
+      <!-- Add-on Products -->
+      <div class="addon-products">
+        <h3>Add-Ons</h3>
+        <div class="addon-product">
+          <input type="checkbox" id="addon1">
+          <label for="addon1">Add-On Product 1 (₹100)</label>
+        </div>
+        <div class="addon-product">
+          <input type="checkbox" id="addon2">
+          <label for="addon2">Add-On Product 2 (₹200)</label>
+        </div>
+      </div>
+
+      <!-- Discount -->
+      <div class="discount">
+        <label for="discount">Apply Discount Code</label>
+        <input type="text" id="discount" placeholder="Enter discount code">
+      </div>
+
+      <!-- Total -->
+      <div class="total">
+        <p>Total: ₹1100</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
