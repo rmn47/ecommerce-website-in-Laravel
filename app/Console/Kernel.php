@@ -57,8 +57,8 @@ class Kernel extends ConsoleKernel
     
                 // Send SMS notification
                 try {
-                    $serverUrl = "msg.msgclub.net";
-                    $authKey = '73956ead71c21196e44ba9bf1523f8a'; // Replace with your actual auth key
+                    $serverUrl = env('MSGCLUB_SERVER_URL'); // Replace with your actual server URL
+                    $authKey = env('MSGCLUB_AUTH_KEY'); // Replace with your actual auth key
                     $msg = "Dear {$order->user->name}, your order {$order->code} has been cancelled due to payment timeout on " . env('APP_NAME') . ".";
     
                     $postData = [

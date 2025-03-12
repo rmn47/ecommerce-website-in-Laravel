@@ -24,8 +24,8 @@ class OtpController extends Controller
     public function otp(Request $request)
     {
         $mobile = $request->input('mb');
-        $serverUrl = env('MSGCLUB_SERVER_URL', 'msg.msgclub.net');
-        $authKey = env('MSGCLUB_AUTH_KEY', '73956ead71c21196e44ba9bf1523f8a');
+        $serverUrl = env('MSGCLUB_SERVER_URL');
+        $authKey = env('MSGCLUB_AUTH_KEY');
         $msg = rand(1005, 9999);
 
         $postData = [
